@@ -1,0 +1,301 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Infographic A4: SKINCHECK - Thấu Hiểu Làn Da Bằng Công Nghệ AI</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts hỗ trợ tiếng Việt sắc nét & hiện đại -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,600&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Be Vietnam Pro"', 'sans-serif'],
+            display: ['"Plus Jakarta Sans"', '"Be Vietnam Pro"', 'sans-serif'],
+          },
+          colors: {
+            brand: {
+              teal: '#0D9488',
+              darkTeal: '#0F766E',
+              lightTeal: '#CCFBF1',
+              sky: '#0284C7',
+              lightSky: '#E0F2FE',
+              coral: '#F97316',
+              rose: '#E11D48',
+              emerald: '#10B981',
+              slate: '#0F172A'
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    :root {
+      --sc-ink: #172554;
+      --sc-teal: #087f8c;
+      --sc-coral: #f05b78;
+      --sc-lilac: #8b5cf6;
+      --sc-amber: #f59e0b;
+      --sc-mint: #10b981;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Be Vietnam Pro', sans-serif;
+      background:
+        radial-gradient(ellipse at 8% 8%, rgba(251, 113, 133, .25), transparent 28%),
+        radial-gradient(ellipse at 92% 12%, rgba(56, 189, 248, .28), transparent 30%),
+        radial-gradient(ellipse at 10% 88%, rgba(167, 139, 250, .24), transparent 30%),
+        radial-gradient(ellipse at 90% 88%, rgba(52, 211, 153, .22), transparent 28%),
+        linear-gradient(135deg, #fff1f2 0%, #eff6ff 34%, #f5f3ff 68%, #ecfdf5 100%);
+      color: #172554;
+      overflow-x: hidden;
+    }
+
+    /* Khung chuẩn tỷ lệ A4 */
+    .a4-sheet {
+      width: 100%;
+      max-width: 820px;
+      min-height: 1160px;
+      background:
+        radial-gradient(circle at 2% 8%, rgba(251, 113, 133, .11), transparent 22%),
+        radial-gradient(circle at 98% 22%, rgba(56, 189, 248, .12), transparent 23%),
+        radial-gradient(circle at 5% 88%, rgba(167, 139, 250, .12), transparent 22%),
+        radial-gradient(circle at 95% 90%, rgba(52, 211, 153, .12), transparent 22%),
+        linear-gradient(160deg, #fff 0%, #fff8fb 28%, #f7faff 62%, #f3fff9 100%);
+      border: 1px solid rgba(255, 255, 255, .95);
+      box-shadow: 0 28px 75px rgba(48, 54, 110, .20), 0 0 0 1px rgba(99, 102, 241, .16);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .dot-pattern {
+      background-image: radial-gradient(rgba(99, 102, 241, .12) 1px, transparent 1px);
+      background-size: 22px 22px;
+    }
+
+    /* Hiệu ứng tia quét AI */
+    @keyframes aiScanLine {
+      0% { top: 8%; opacity: 0.25; }
+      50% { top: 88%; opacity: 1; }
+      100% { top: 8%; opacity: 0.25; }
+    }
+    .ai-scan-bar {
+      animation: aiScanLine 3s ease-in-out infinite;
+      height: 2.5px;
+      box-shadow: 0 0 16px #22d3ee, 0 0 28px rgba(34, 211, 238, .75);
+    }
+
+    /* Hiệu ứng dòng chảy SVG */
+    @keyframes dashFlow {
+      to { stroke-dashoffset: -48; }
+    }
+    .flow-river-animated {
+      stroke-dasharray: 10 6;
+      animation: dashFlow 2.2s linear infinite;
+    }
+
+    /* Chế độ chỉnh sửa trực tiếp */
+    .edit-mode-active [contenteditable="true"] {
+      outline: 1.5px dashed #0284c7;
+      background-color: rgba(224, 242, 254, 0.35);
+      border-radius: 6px;
+      padding: 1px 4px;
+      transition: all 0.2s ease;
+    }
+    .edit-mode-active [contenteditable="true"]:focus {
+      outline: 2px solid #0d9488;
+      background-color: #ffffff;
+    }
+    .edit-mode-active img[data-editable-img] {
+      outline: 2px dashed #f59e0b;
+      cursor: pointer;
+    }
+
+    #infographicCanvas section,
+    #infographicCanvas footer {
+      box-shadow: 0 9px 24px rgba(38, 52, 105, .085), 0 2px 5px rgba(38, 52, 105, .045);
+      border-radius: 20px;
+    }
+
+    button { transition: transform .18s ease, filter .18s ease, box-shadow .18s ease; }
+    button:hover { transform: translateY(-1px); filter: saturate(1.1); }
+
+    /* Gương lật camera selfie */
+    .mirror-video { transform: scaleX(-1); }
+
+    @media print {
+      @page { size: A4 portrait; margin: 0; }
+      body { background: #ffffff !important; margin: 0 !important; padding: 0 !important; }
+      .no-print { display: none !important; }
+      .a4-sheet {
+        width: 210mm !important;
+        max-width: 210mm !important;
+        min-height: 297mm !important;
+        box-shadow: none !important;
+        border-radius: 0 !important;
+        border: 0 !important;
+        margin: 0 !important;
+        page-break-after: avoid;
+      }
+      * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+    }
+  </style>
+</head>
+<body class="py-4 px-2 sm:px-6 md:py-8 flex flex-col items-center">
+
+  <!-- THANH CÔNG CỤ TƯƠNG TÁC & DEMO THUYẾT TRÌNH (Ẩn khi in PDF A4) -->
+  <header class="no-print w-full max-w-[820px] mb-4 bg-white/90 backdrop-blur-md border border-sky-200/80 rounded-2xl p-3 shadow-lg flex flex-wrap items-center justify-between gap-2 z-30">
+    <div class="flex items-center gap-2.5">
+      <span class="inline-flex items-center justify-center w-8 h-8 rounded-xl bg-gradient-to-br from-teal-600 to-sky-600 text-white font-bold text-xs shadow-sm">A4</span>
+      <div>
+        <p class="text-xs font-bold text-slate-800 leading-tight">SkinCheck AI • Infographic &amp; Live Demo</p>
+        <p class="text-[11px] text-slate-500">Tỷ lệ 210 × 297 mm • Trực tiếp trên trình duyệt</p>
+      </div>
+    </div>
+
+    <div class="flex flex-wrap items-center gap-2">
+      <!-- Nút MỞ DEMO SOI DA TRỰC TIẾP -->
+      <button id="openDemoBtn" type="button" class="px-3.5 py-2 rounded-xl text-xs font-extrabold bg-gradient-to-r from-rose-500 via-pink-500 to-amber-500 text-white shadow-md hover:shadow-lg transition flex items-center gap-1.5 cursor-pointer animate-pulse hover:animate-none">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
+        </svg>
+        <span>Test Soi Da Trực Tiếp</span>
+      </button>
+
+      <!-- Nút bật/tắt tia quét AI trên ảnh -->
+      <button id="toggleScanBtn" type="button" class="px-3 py-2 rounded-xl text-xs font-semibold bg-sky-50 text-sky-700 hover:bg-sky-100 border border-sky-200 transition flex items-center gap-1.5 cursor-pointer">
+        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+        </svg>
+        <span>Quét AI: Bật</span>
+      </button>
+
+      <!-- Nút bật/tắt chỉnh sửa chữ trực tiếp -->
+      <button id="toggleEditBtn" type="button" class="px-3 py-2 rounded-xl text-xs font-semibold bg-amber-50 text-amber-700 hover:bg-amber-100 border border-amber-200 transition flex items-center gap-1.5 cursor-pointer">
+        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+        </svg>
+        <span>Sửa nội dung</span>
+      </button>
+
+      <!-- Nút In / Lưu PDF A4 -->
+      <button id="printBtn" type="button" class="px-3.5 py-2 rounded-xl text-xs font-bold bg-gradient-to-r from-teal-600 to-sky-600 text-white hover:from-teal-700 hover:to-sky-700 shadow-sm transition flex items-center gap-1.5 cursor-pointer">
+        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />
+        </svg>
+        <span>Xuất PDF A4</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Hộp thông báo trạng thái (Toast) -->
+  <div id="toastBox" class="no-print fixed bottom-5 right-5 z-50 transform translate-y-24 opacity-0 transition-all duration-300 bg-slate-900 text-white text-xs font-medium px-4 py-3 rounded-xl shadow-xl flex items-center gap-2">
+    <span class="w-2 h-2 rounded-full bg-teal-400"></span>
+    <span id="toastText">Đã cập nhật chế độ</span>
+  </div>
+
+  <!-- Input ẩn hỗ trợ thay ảnh trong Infographic -->
+  <input type="file" id="imageUploader" accept="image/*" class="hidden">
+
+  <!-- ===================================================================== -->
+  <!-- MODAL DEMO CHỤP ẢNH & PHÂN TÍCH DA AI TRỰC TIẾP                      -->
+  <!-- ===================================================================== -->
+  <div id="liveDemoModal" class="no-print fixed inset-0 z-50 hidden items-center justify-center bg-slate-950/80 backdrop-blur-md p-2 sm:p-4 overflow-y-auto">
+    <div class="bg-white w-full max-w-4xl rounded-3xl shadow-2xl border border-cyan-200 overflow-hidden my-auto">
+      <div class="bg-gradient-to-r from-indigo-950 via-teal-900 to-cyan-900 text-white px-5 py-3.5 flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <div class="w-9 h-9 rounded-xl bg-cyan-400/20 border border-cyan-300/40 flex items-center justify-center text-lg">🔬</div>
+          <div>
+            <div class="flex items-center gap-2">
+              <h3 class="font-display font-extrabold text-sm sm:text-base tracking-tight">SKINCHECK AI — LIVE PRESENTATION DEMO</h3>
+              <span class="px-2 py-0.5 rounded-full bg-emerald-400/20 border border-emerald-300/40 text-emerald-200 text-[10px] font-bold">REAL-TIME ENGINE</span>
+            </div>
+            <p class="text-[11px] text-cyan-100">Chụp trực tiếp bằng Camera hoặc tải ảnh khuôn mặt để AI quét kết quả ngay trên sân khấu</p>
+          </div>
+        </div>
+        <button id="closeDemoBtn" type="button" class="w-8 h-8 rounded-xl bg-white/10 hover:bg-rose-500 text-white flex items-center justify-center transition cursor-pointer">
+          ✕
+        </button>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 p-4 sm:p-5 bg-slate-50/70">
+        <!-- Cột Trái: Khung Camera -->
+        <div class="lg:col-span-6 flex flex-col gap-3">
+          <div class="relative w-full aspect-[4/3] rounded-2xl overflow-hidden bg-slate-900 border-2 border-cyan-400/60 shadow-inner flex items-center justify-center">
+            <video id="demoVideo" autoplay playsinline muted class="w-full h-full object-cover mirror-video hidden"></video>
+            <img id="demoCapturedImg" alt="Ảnh khuôn mặt phân tích" class="w-full h-full object-cover hidden">
+            <div id="cameraPlaceholder" class="text-center p-6 space-y-2">
+              <div class="w-14 h-14 mx-auto rounded-2xl bg-cyan-500/20 border border-cyan-400/40 flex items-center justify-center text-2xl">📸</div>
+              <p class="text-sm font-bold text-white">Sẵn sàng quét da khán giả</p>
+              <p class="text-xs text-slate-300 max-w-xs mx-auto">Nhấn <strong>"Bật Camera"</strong> để chụp trực tiếp hoặc <strong>"Tải ảnh lên"</strong>.</p>
+            </div>
+
+            <div id="demoHud" class="pointer-events-none absolute inset-0">
+              <div class="absolute inset-0 flex items-center justify-center">
+                <div class="w-44 h-56 sm:w-48 sm:h-64 rounded-[50%] border-2 border-dashed border-cyan-300/75 shadow-[0_0_25px_rgba(34,211,238,0.25)]"></div>
+              </div>
+              <div class="absolute top-3 left-3 w-5 h-5 border-t-2 border-l-2 border-cyan-400 rounded-tl"></div>
+              <div class="absolute top-3 right-3 w-5 h-5 border-t-2 border-r-2 border-amber-400 rounded-tr"></div>
+              <div class="absolute bottom-3 left-3 w-5 h-5 border-b-2 border-l-2 border-pink-400 rounded-bl"></div>
+              <div class="absolute bottom-3 right-3 w-5 h-5 border-b-2 border-r-2 border-emerald-400 rounded-br"></div>
+              <div id="demoScanBeam" class="hidden ai-scan-bar absolute left-3 right-3 bg-gradient-to-r from-pink-400 via-cyan-300 to-emerald-300"></div>
+              <div id="demoStatusBadge" class="absolute top-3 left-1/2 -translate-x-1/2 bg-slate-950/80 backdrop-blur-md text-cyan-200 border border-cyan-400/40 px-3 py-1 rounded-full text-[11px] font-bold whitespace-nowrap">
+                Đặt khuôn mặt vào giữa khung hình
+              </div>
+            </div>
+          </div>
+
+          <canvas id="analysisCanvas" class="hidden"></canvas>
+          <input type="file" id="demoFileInput" accept="image/*" class="hidden">
+
+          <div class="grid grid-cols-3 gap-2">
+            <button id="startCamBtn" type="button" class="py-2.5 px-3 rounded-xl bg-sky-600 hover:bg-sky-700 text-white font-bold text-xs shadow-sm flex items-center justify-center gap-1.5 cursor-pointer">
+              <span>🎥</span><span>Bật Camera</span>
+            </button>
+            <button id="captureAnalyzeBtn" type="button" class="py-2.5 px-3 rounded-xl bg-gradient-to-r from-teal-600 to-emerald-600 hover:from-teal-700 hover:to-emerald-700 text-white font-extrabold text-xs shadow-md flex items-center justify-center gap-1.5 cursor-pointer">
+              <span>⚡</span><span>Chụp &amp; Quét Da</span>
+            </button>
+            <button id="uploadDemoImgBtn" type="button" class="py-2.5 px-3 rounded-xl bg-white hover:bg-slate-100 text-slate-800 border border-slate-300 font-bold text-xs flex items-center justify-center gap-1.5 cursor-pointer">
+              <span>🖼️</span><span>Tải ảnh lên</span>
+            </button>
+          </div>
+          <p class="text-[11px] text-slate-500 text-center">Hướng mặt về phía đủ sáng, nhấn <strong>"Chụp &amp; Quét Da"</strong> để AI chấm điểm.</p>
+        </div>
+
+        <!-- Cột Phải: Bảng Kết Quả -->
+        <div class="lg:col-span-6 bg-white rounded-2xl p-4 border border-slate-200 shadow-sm flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between pb-3 border-b border-slate-100">
+              <div>
+                <span class="text-[10px] font-extrabold uppercase tracking-wider text-teal-600">BÁO CÁO PHÂN TÍCH TỨC THÌ</span>
+                <h4 id="resultSkinType" class="font-display text-lg font-extrabold text-slate-900">Chưa có dữ liệu quét</h4>
+              </div>
+              <div class="text-right">
+                <span class="text-[10px] text-slate-500 block">Điểm Sức Khỏe Da</span>
+                <span id="resultOverallScore" class="font-display text-2xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-teal-600 to-sky-600">--/100</span>
+              </div>
+            </div>
+
+            <div class="space-y-3 mt-3.5">
+              <div>
+                <div class="flex justify-between text-xs font-bold mb-1">
+                  <span class="text-slate-700">💧 Độ ẩm &amp; Hàng rào bảo vệ</span>
+                  <span id="metricHydrationVal" class="text-sky-600">--%</span>
+                </div>
+                <div class="w-full h-2.5 bg-sky-100 rounded-full overflow-hidden">
+                  <div id="metricHydrationBar" class="h-full bg-gradient-to-r from-sky-400 to-blue-600 rounded-full transition-all duration-700" style="width: 0%"></div>
+                </div>
+              </div>
+
+              <div>
+                <div
